@@ -34,11 +34,11 @@
                         <label for="inputfile__button">
                             <p>Click on the following <strong>Choose File</strong> button and select your CSV grades files: </p>
                             <p id="file_upload">
-                                <input type="button" id="inputfile__button" class="btn btn-primary" value="Choose File..." /><span id="file_name">or Drag and Drop the file here</span>
+                                <input type="button" id="inputfile__button" class="btn btn-primary" value="Choose File..." /><span id="file_name" role="status">or Drag and Drop the file here</span>
                                 <input type="file" class="button" name="inputfile" id="inputfile" onchange="verifyCSV(false)">
                             </p>
                         </label> 
-                        <div id="output"></div>
+                        <div id="output" role="status"></div>
                     </div>
                 </div>
             </div>

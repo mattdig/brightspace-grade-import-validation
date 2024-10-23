@@ -30,26 +30,10 @@ window.onload = function () {
 
 function dropFile(ev) {
 
-    // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
 
     verifyCSV(ev.dataTransfer.files[0]);
 
-    // if (ev.dataTransfer.items) {
-    //   // Use DataTransferItemList interface to access the file(s)
-    //   [...ev.dataTransfer.items].forEach((item, i) => {
-    //     // If dropped items aren't files, reject them
-    //     if (item.kind === "file") {
-    //       const file = item.getAsFile();
-    //       console.log(`… file[${i}].name = ${file.name}`);
-    //     }
-    //   });
-    // } else {
-    //   // Use DataTransfer interface to access the file(s)
-    //   [...ev.dataTransfer.files].forEach((file, i) => {
-    //     console.log(`… file[${i}].name = ${file.name}`);
-    //   });
-    // }
 }
 
 function verifyCSV(file) {
@@ -58,16 +42,17 @@ function verifyCSV(file) {
         file = document.getElementById("inputfile").files[0];
     }
 
-    if (file != "undefined" && file.type == "text/csv") {
-        console.log("CSV file detected");
+    $("#output").html("");
 
+    if (file != "undefined" && file.type == "text/csv") {
+        
         $("#file_name").text(file.name);
 
         validateCSV(file);
-
+    } else if (file.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+        $("#output").html("<h2>You will need to convert your XLSX file to a CSV file.</h2>");
     } else {
-        console.log('not a CSV file');
-        $("#file_name").text("This is not a CSV file. Please upload a CSV file to convert.");
+        $("#output").html("<h2>This is not a CSV file. Please upload a CSV file.</h2>");
     }
 
 }
@@ -144,7 +129,6 @@ function validateCSV(file) {
                         if (col.endsWith(string)) {
                             is_grade = true;
                             column_order.push('b');
-                            console.log(`Grade type found in Column ${char}`);
                         }
                     }
 
@@ -152,7 +136,6 @@ function validateCSV(file) {
                         if (final_grades.includes(col)) {
                             is_grade = true;
                             column_order.push('c');
-                            console.log(`Grade type found in Column ${char}`);
                         }
                     }
 
@@ -171,7 +154,6 @@ function validateCSV(file) {
                     errors.push('Last column must be "' + last_column + '"');
                 } else {
                     column_order.push('d');
-                    console.log(`Last column in Column ${char}`);
                 }
             }
 
@@ -188,9 +170,6 @@ function validateCSV(file) {
         }
 
         let sorted_columns = column_order.slice().sort();
-
-        console.log(column_order);
-        console.log(sorted_columns);
         
         if (sorted_columns.join() != column_order.join()) {
             errors.push('Columns are not in the correct order');
@@ -225,7 +204,7 @@ function validateCSV(file) {
         if (errors.length > 0)
             output.innerHTML = '<h2>The following problems were found in your CSV file:</h2><ul><li>' + errors.join("</li><li>") + '</li></ul>';
         else
-            output.innerHTML = '<h2>Your CSV is valid and ready to be imported.</h2>';
+            output.innerHTML = '<h2>Your CSV file is valid and ready to be imported.</h2>';
 
 
     }
