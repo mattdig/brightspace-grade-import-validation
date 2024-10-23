@@ -144,7 +144,6 @@ function validateCSV(file) {
                     if (!is_grade) {
                         // Column index starting at A
                         errors.push('Column ' + char + ' has an invalid title');
-                        column_order.push('x');
                     }
                 }
 
