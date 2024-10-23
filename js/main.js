@@ -87,6 +87,8 @@ function validateCSV(file) {
 
     let end_of_line_indicator = '#';
 
+    let warned_about_emails = false;
+
     let reader = new FileReader();
     reader.readAsText(file);
 
@@ -142,8 +144,12 @@ function validateCSV(file) {
                     }
 
                     if (!is_grade) {
-                        // Column index starting at A
-                        errors.push('Column ' + char + ' has an invalid title');
+                        if(col.toLowerCase().includes('email')) {
+                            errors.push('Column ' + char + ' appears to be an email address, please remove it, or replace it with ' + mandatory_fields.join(' or '));
+                            warned_about_emails = true;
+                        } else {
+                            errors.push('Column ' + char + ' has an invalid title');
+                        }
                     }
                 }
 
@@ -168,8 +174,11 @@ function validateCSV(file) {
             errors.push('No grades were found');
         }
 
-        let sorted_columns = column_order.slice(0, column_order.length - 1).sort();
+        let sorted_columns = column_order.slice().sort();
 
+        console.log(column_order);
+        console.log(sorted_columns);
+        
         if (sorted_columns != column_order) {
             errors.push('Columns are not in the correct order');
         }
@@ -177,6 +186,19 @@ function validateCSV(file) {
         let data = csv.slice(1);
 
         for (const [index, row] of data.entries()) {
+            for(const [i, col] of row.entries()) {
+
+                if(warned_about_emails == false){
+                    // regex for email address
+                    let email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    let char = String.fromCharCode(65 + i);
+
+                    if (email_regex.test(col)) {
+                        errors.push('Column ' + char + ' appears to be an email address, please remove that column, or replace it with ' + mandatory_fields.join(' or '));
+                        warned_about_emails = true;
+                    }
+                }
+            }
             if (row[row.length - 1] != end_of_line_indicator) {
                 errors.push('Row ' + (index + 2) + ' does not end with "' + end_of_line_indicator + '"');
             }
