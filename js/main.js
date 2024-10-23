@@ -11,6 +11,17 @@ window.onload = function () {
     });
 
     dropzone.addEventListener('drop', dropFile);
+    
+    dropzone.addEventListener('drop', function () {
+        dropzone.classList.remove('hover');
+    });
+    dropzone.addEventListener('dragover', function () {
+        dropzone.classList.add('hover');
+    });
+    dropzone.addEventListener('dragleave', function () {
+        dropzone.classList.remove('hover');
+    });
+    
 
     document.getElementById('inputfile__button').onclick = function () {
         document.getElementById('inputfile').click();
@@ -87,8 +98,6 @@ function validateCSV(file) {
 
     let end_of_line_indicator = '#';
 
-    let warned_about_emails = false;
-
     let reader = new FileReader();
     reader.readAsText(file);
 
@@ -103,6 +112,10 @@ function validateCSV(file) {
         let mand_fields_found = 0;
 
         let errors = [];
+
+        let warned_about_emails = false;
+        
+        let columns_missing_eol = [];
 
 
         // column order should be a, b, c, d
@@ -148,7 +161,7 @@ function validateCSV(file) {
                             errors.push('Column ' + char + ' appears to be an email address, please remove it, or replace it with ' + mandatory_fields.join(' or '));
                             warned_about_emails = true;
                         } else {
-                            errors.push('Column ' + char + ' has an invalid title');
+                            errors.push('Column ' + char + ' has an invalid heading');
                         }
                     }
                 }
@@ -179,7 +192,7 @@ function validateCSV(file) {
         console.log(column_order);
         console.log(sorted_columns);
         
-        if (sorted_columns != column_order) {
+        if (sorted_columns.join() != column_order.join()) {
             errors.push('Columns are not in the correct order');
         }
 
@@ -194,18 +207,21 @@ function validateCSV(file) {
                     let char = String.fromCharCode(65 + i);
 
                     if (email_regex.test(col)) {
-                        errors.push('Column ' + char + ' appears to be an email address, please remove that column, or replace it with ' + mandatory_fields.join(' or '));
+                        errors.push('Column ' + char + ' appears to contain an email address, please only use ' + mandatory_fields.join(' or '));
                         warned_about_emails = true;
                     }
                 }
             }
             if (row[row.length - 1] != end_of_line_indicator) {
-                errors.push('Row ' + (index + 2) + ' does not end with "' + end_of_line_indicator + '"');
+                columns_missing_eol.push(index + 2);
             }
         }
 
         let output = document.getElementById('output');
-
+        
+        if (columns_missing_eol.length > 0)            
+            errors.push('Row' + (columns_missing_eol.length > 1 ? 's' : '') + ' ' + (columns_missing_eol.join(', ')) + ' do' + (columns_missing_eol.length > 1 ? '' : 'es') + ' not end with "' + end_of_line_indicator + '"');
+        
         if (errors.length > 0)
             output.innerHTML = '<h2>The following problems were found in your CSV file:</h2><ul><li>' + errors.join("</li><li>") + '</li></ul>';
         else
