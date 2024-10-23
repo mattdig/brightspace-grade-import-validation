@@ -1,0 +1,41 @@
+.button-example {
+    display: inline-block;
+    padding: 3px;
+    background-color: #ccc;
+}
+.red-alert{
+    background-color: #e67878;
+    border: 1px solid #000;
+    padding: 1em;
+    color: black;
+    margin-top:1em;
+}
+#file_upload{
+    border: 3px solid #333;
+    padding: 20px;
+    margin:20px 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+#file_upload *{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+#file_upload span{
+    position: relative;
+    display: inline-block;
+    margin-left:10px;
+    bottom: -4px;
+}
+#inputfile__button{display:inline-block; padding:10px 20px;}
+#inputfile{display: none;}
+
+#file_upload:hover{
+    background-color: #ffffe0;
+}
+footer *{
+    font-size: 0.9em;
+}
+#export_quizzes_form{
+    display:none;
+}

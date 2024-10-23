@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Quiz2Text</title>
+<link rel="stylesheet" href="css/bootstrap.3.3.6.min.css" />
+<link rel="stylesheet" href="css/fontawesome.all.css" />
+<link rel="stylesheet" href="css/brightspace.css" />
+<link rel="stylesheet" href="css/style.css" />
+<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script></script>
+<script type="text/javascript" src="js/bootstrap.3.3.6.min.js"></script>
+<script type="text/javascript" src="js/csv.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</head>
+<body class="content" role="document">
+	<div class="container-fluid">
+		<main>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1>Brightspace Grade Import Verification</h1>
+                    <div id="instructions">
+                        <h2>Upload the CSV File for Verification</h2>
+                        <label for="inputfile__button">
+                            <p>Click on the following <strong>Choose File</strong> button and select your CSV grades files: </p>
+                            <p id="file_upload" ondrop="uploadFile(event)">
+                                <input type="button" id="inputfile__button" class="btn btn-primary" value="Choose File..." /><span id="file_name">No file chosen</span>
+                                <input type="file" class="button" name="inputfile" id="inputfile" onchange="verifyCSV(this)">
+                            </p>
+                        </label> 
+                        <p id="doneMsg">No file chosen yet.</p>
+                        <p id="errors"></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
