@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Quiz2Text</title>
+<title>Verify Grades CSV</title>
 <link rel="stylesheet" href="css/bootstrap.3.3.6.min.css" />
 <link rel="stylesheet" href="css/fontawesome.all.css" />
 <link rel="stylesheet" href="css/brightspace.css" />
@@ -19,16 +19,26 @@
                 <div class="col-xs-12">
                     <h1>Brightspace Grade Import Verification</h1>
                     <div id="instructions">
+                        <h2>Instructions</h2>
+                        <p>This tool will verify the contents of a CSV file that you have exported from Brightspace. The CSV file should be follow these rules:</p>
+                        <ul>
+                            <li>It must be a CSV file (not XLSX)</li>
+                            <li>The first columns must identify the students with ONLY (one or both): <ul><li>OrgDefinedID</li><li>Username</li></ul></li>
+                            <li>Do not include any addition indentifying columns for the students (email address, name, etc.)</li>
+                            <li>Grade columns headings must end in one of:<ul><li>Points Grade</li><li>Grade Symbol</li><li>Text Grade</li><li>Example: "Midterm Exam Points Grade"</li></ul></li>
+                            <li>Adjusted Final Grade column headings must be:<ul><li>Adjusted Final Grade Numerator</li><li>Adjusted Final Grade Denominator</li></ul></li>
+                            <li>The last column heading must be: "End-of-Line Indicator"</li>
+                            <li>The last column of every row of grade data must be: "#" as this is the end of line indicator</li>
+                        </ul>
                         <h2>Upload the CSV File for Verification</h2>
                         <label for="inputfile__button">
                             <p>Click on the following <strong>Choose File</strong> button and select your CSV grades files: </p>
-                            <p id="file_upload" ondrop="uploadFile(event)">
-                                <input type="button" id="inputfile__button" class="btn btn-primary" value="Choose File..." /><span id="file_name">No file chosen</span>
-                                <input type="file" class="button" name="inputfile" id="inputfile" onchange="verifyCSV(this)">
+                            <p id="file_upload">
+                                <input type="button" id="inputfile__button" class="btn btn-primary" value="Choose File..." /><span id="file_name">or Drag and Drop the file here</span>
+                                <input type="file" class="button" name="inputfile" id="inputfile" onchange="verifyCSV(false)">
                             </p>
                         </label> 
-                        <p id="doneMsg">No file chosen yet.</p>
-                        <p id="errors"></p>
+                        <div id="output"></div>
                     </div>
                 </div>
             </div>
