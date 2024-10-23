@@ -225,7 +225,7 @@ function validateCSV(file) {
         if (errors.length > 0)
             output.innerHTML = '<h2>The following problems were found in your CSV file:</h2><ul><li>' + errors.join("</li><li>") + '</li></ul>';
         else
-            output.innerHTML = 'Your CSV is valid and ready to be imported.';
+            output.innerHTML = '<h2>Your CSV is valid and ready to be imported.</h2>';
 
 
     }
