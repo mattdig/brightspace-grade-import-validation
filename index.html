@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Verify Grades CSV</title>
+<title>validate Grades CSV</title>
 <link rel="stylesheet" href="css/bootstrap.3.3.6.min.css" />
 <link rel="stylesheet" href="css/fontawesome.all.css" />
 <link rel="stylesheet" href="css/brightspace.css" />
@@ -17,10 +17,10 @@
 		<main>
             <div class="row">
                 <div class="col-xs-12">
-                    <h1>Brightspace Grade Import Verification</h1>
+                    <h1>Brightspace Grade Import Validation</h1>
                     <div id="instructions">
                         <h2>Instructions</h2>
-                        <p>This tool will verify the contents of a CSV file that you will upload to Brightspace. The CSV file should follow these rules:</p>
+                        <p>This tool will validate the contents of a CSV file that you will upload to Brightspace. The CSV file should follow these rules:</p>
                         <ul>
                             <li>It must be a CSV file (not XLSX)</li>
                             <li>The first columns must identify the students with ONLY (one or both): <ul><li>OrgDefinedID</li><li>Username</li></ul></li>
@@ -30,7 +30,7 @@
                             <li>The last column heading must be: "End-of-Line Indicator"</li>
                             <li>The last column of every row of grade data must be: "#" as this is the end of line indicator</li>
                         </ul>
-                        <h2>Upload the CSV File for Verification</h2>
+                        <h2>Upload the CSV File for Validation</h2>
                         <label for="inputfile__button">
                             <p>Click on the following <strong>Choose File</strong> button and select your CSV grades files: </p>
                             <p id="file_upload">
