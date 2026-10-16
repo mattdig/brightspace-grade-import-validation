@@ -102,6 +102,9 @@ function validateCSV(file) {
         
         let columns_missing_eol = [];
 
+        let fieldNames = [];
+        let duplicateFields = [];
+
 
         // column order should be a, b, c, d
         // a = mandatory fields
@@ -129,6 +132,11 @@ function validateCSV(file) {
                         if (col.endsWith(string)) {
                             is_grade = true;
                             column_order.push('b');
+                            if (fieldNames.includes(col) && !duplicateFields.includes(col)) {
+                                duplicateFields.push(col);
+                            } else {
+                                fieldNames.push(col);
+                            }
                         }
                     }
 
@@ -173,6 +181,10 @@ function validateCSV(file) {
         
         if (sorted_columns.join() != column_order.join()) {
             errors.push('Columns are not in the correct order');
+        }
+
+        if (duplicateFields.length > 0) {
+            errors.push('All grade item names must be unique. Duplicate grade item names found: ' + duplicateFields.join(', '));
         }
 
         let data = csv.slice(1);
