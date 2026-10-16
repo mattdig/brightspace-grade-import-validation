@@ -75,6 +75,8 @@ function validateCSV(file) {
     ];
 
     let final_grades = [
+        'Calculated Final Grade Numerator',
+        'Calculated Final Grade Denominator',
         'Adjusted Final Grade Numerator',
         'Adjusted Final Grade Denominator'
     ];
