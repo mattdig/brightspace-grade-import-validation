@@ -131,7 +131,7 @@ function validateCSV(file) {
                     let is_grade = false;
 
                     for (const string of grade_types) {
-                        if (col.endsWith(string)) {
+                        if (col.endsWith(' ' + string) && col.trim() != string) {
                             is_grade = true;
                             column_order.push('b');
 
