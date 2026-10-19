@@ -75,10 +75,13 @@ function validateCSV(file) {
     ];
 
     let final_grades = [
-        'Calculated Final Grade Numerator',
-        'Calculated Final Grade Denominator',
         'Adjusted Final Grade Numerator',
         'Adjusted Final Grade Denominator'
+    ];
+
+    let excluded_fields = [
+        'Calculated Final Grade Numerator',
+        'Calculated Final Grade Denominator'
     ];
 
     let last_column = 'End-of-Line Indicator';
@@ -149,11 +152,14 @@ function validateCSV(file) {
                         }
                     }
 
-                    if (!is_grade) {
-                        if (final_grades.includes(col)) {
-                            is_grade = true;
-                            column_order.push('c');
-                        }
+                    if (!is_grade && final_grades.includes(col)) {
+                        is_grade = true;
+                        column_order.push('c');
+                    }
+
+                    if (!is_grade && excluded_fields.includes(col)) {
+                        errors.push('"' + col + '" cannot be uploaded');
+                        continue;
                     }
 
                     if (!is_grade) {
