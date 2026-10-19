@@ -134,10 +134,17 @@ function validateCSV(file) {
                         if (col.endsWith(string)) {
                             is_grade = true;
                             column_order.push('b');
-                            if (fieldNames.includes(col) && !duplicateFields.includes(col)) {
-                                duplicateFields.push(col);
+
+                            let grade_name_length = string.split(' ').length;
+
+                            let fieldName = col.split(' ').slice(0, -grade_name_length).join(' ');
+
+                            if (fieldNames.includes(fieldName)) {
+                                if(!duplicateFields.includes(fieldName)) {
+                                    duplicateFields.push(fieldName);
+                                }
                             } else {
-                                fieldNames.push(col);
+                                fieldNames.push(fieldName);
                             }
                         }
                     }
