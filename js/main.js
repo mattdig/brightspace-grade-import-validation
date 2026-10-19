@@ -130,12 +130,12 @@ function validateCSV(file) {
 
                     let is_grade = false;
 
-                    for (const string of grade_types) {
-                        if (col.endsWith(' ' + string) && col.trim() != string) {
+                    for (const gradeType of grade_types) {
+                        if (col.endsWith(' ' + gradeType) && col.trim() != gradeType) {
                             is_grade = true;
                             column_order.push('b');
 
-                            let grade_name_length = string.split(' ').length;
+                            let grade_name_length = gradeType.split(' ').length;
 
                             let fieldName = col.split(' ').slice(0, -grade_name_length).join(' ');
 
